@@ -19,7 +19,7 @@ export const toggleMachine = Machine({
       on: { TOGGLE: 'inactive' }, // This is the next state
       meta: {
         test: async wrapper => {
-        // The current state is active so the button is Off
+          // The current state is active so the button is Off
           expect(wrapper.text()).toEqual("On");
         }
       },

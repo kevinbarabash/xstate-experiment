@@ -1,4 +1,6 @@
-{
+const babelJest = require("babel-jest");
+
+const babelConfig = {
     "presets": [
         ["@babel/preset-env", {
             "targets": {
@@ -8,4 +10,6 @@
         "@babel/preset-react"
     ],
     "plugins": ["@babel/plugin-proposal-class-properties"]
-}
+};
+
+module.exports = babelJest.createTransformer(babelConfig);

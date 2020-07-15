@@ -24,7 +24,5 @@
     "react-dom": "^16.13.1",
     "xstate": "^4.9.0"
   },
-  "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
-  }
+  "browserslist": ["last 1 Chrome versions"]
 }
