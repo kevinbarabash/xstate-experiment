@@ -1,26 +1,25 @@
-// @flow
 import * as React from "react";
 import { Machine, interpret } from "xstate";
 
 import { passwordFormMachine } from "./password-form-machine.js";
 
-type Props = {|
-  actorIsChild: boolean,
-  hasPassword: boolean,
-  // If the user is a parent modifying their child's settings.
-  // Please note that the child may be over 13.
-  isModifyingChild: boolean,
-  requiresExistingPassword: boolean,
-  targetId: string,
-  actorIdentifier: ?string,
-  successfullyChangedSettings: () => mixed,
-|};
+// type Props = {|
+//   actorIsChild: boolean,
+//   hasPassword: boolean,
+//   // If the user is a parent modifying their child's settings.
+//   // Please note that the child may be over 13.
+//   isModifyingChild: boolean,
+//   requiresExistingPassword: boolean,
+//   targetId: string,
+//   actorIdentifier: ?string,
+//   successfullyChangedSettings: () => mixed,
+// |};
 
-type State = {|
-  current: any, // not sure how to model this yet
-|};
+// type State = {|
+//   current: any, // not sure how to model this yet
+// |};
 
-class PasswordFormXState extends React.Component<Props, State> {
+class PasswordFormXState extends React.Component {
   state = {
     current: passwordFormMachine.initialState,
   };
@@ -54,13 +53,9 @@ class PasswordFormXState extends React.Component<Props, State> {
 
     const {existingPassword, newPasswords} = current.value;
 
-    // console.log(`existingPassword = ${existingPassword}`);
-    // console.log(`newPasswords = ${newPasswords}`);
-    console.log(current.context)
-
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
-        Existing Password: <input onChange={this.handleExistingChange}></input>
+        Existing Password: <input id="existing" onChange={this.handleExistingChange}></input>
         {existingPassword === "empty" && 
           <div style={{color: "red"}}>
             Existing password can't be empty
@@ -70,8 +65,8 @@ class PasswordFormXState extends React.Component<Props, State> {
             Existing password is valid
           </div>}
         <br />
-        New Password: <input onChange={this.handleFirstPasswordChange}></input>
-        Repeat New Password: <input onChange={this.handleSecondPasswordChange}></input>
+        New Password: <input id="first" onChange={this.handleFirstPasswordChange}></input>
+        Repeat New Password: <input id="second" onChange={this.handleSecondPasswordChange}></input>
         {newPasswords === "not_equal" &&
           <div style={{color: "red"}}>
             New passwords don't match

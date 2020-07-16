@@ -9,5 +9,8 @@ module.exports = {
     transform: {
         "^.+\\.jsx?$": "<rootDir>/jest.transform.js",
     },
-    setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+    setupFilesAfterEnv: [
+      "<rootDir>/jest.setup.js",
+      "./node_modules/jest-enzyme/lib/index.js",
+    ],
 };

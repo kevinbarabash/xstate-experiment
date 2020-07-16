@@ -12,6 +12,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "^26.1.0",
+    "jest-enzyme": "^7.1.2",
     "parcel-bundler": "^1.12.4"
   },
   "scripts": {
@@ -24,5 +25,7 @@
     "react-dom": "^16.13.1",
     "xstate": "^4.9.0"
   },
-  "browserslist": ["last 1 Chrome versions"]
+  "browserslist": [
+    "last 1 Chrome versions"
+  ]
 }

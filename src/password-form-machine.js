@@ -1,6 +1,8 @@
 // @flow
 import { Machine, assign } from "xstate";
-// import {createModel} from "@xstate/test";
+import {createModel} from "@xstate/test";
+
+// TODO: check that the new passwords don't match the existing password
 
 // We define these transitions outside of the machine so that they can be
 // reused.  This is useful since we want to respond to change to the various
@@ -9,7 +11,7 @@ const existingTransitions = {
   EXISTING_PASSWORD: [
     {
       target: "check_existing",
-      actions: assign({ existing: (ctx, evt) => (ctx.existing = evt.value) }),
+      actions: assign({ existing: (ctx, evt) => evt.value }),
     },
   ],
 };
@@ -19,7 +21,7 @@ const passwordTransitions = {
     {
       target: "check_passwords",
       actions: assign({
-        first: (ctx, evt) => (ctx.first = evt.value),
+        first: (ctx, evt) => evt.value,
       }),
     },
   ],
@@ -27,7 +29,7 @@ const passwordTransitions = {
     {
       target: "check_passwords",
       actions: assign({
-        second: (ctx, evt) => (ctx.second = evt.value),
+        second: (ctx, evt) => evt.value,
       }),
     },
   ],
@@ -49,6 +51,12 @@ export const passwordFormMachine = Machine(
         states: {
           start: {
             on: existingTransitions,
+            meta: {
+              // test methods must be present in order for coverage to be reported
+              test: async wrapper => {
+                // TBD
+              }
+            },
           },
           check_existing: {
             on: {
@@ -67,9 +75,19 @@ export const passwordFormMachine = Machine(
           },
           empty: {
             on: existingTransitions,
+            meta: {
+              test: async wrapper => {
+                expect(wrapper).toIncludeText("Existing password can't be empty")
+              }
+            },
           },
           valid: {
             on: existingTransitions,
+            meta: {
+              test: async wrapper => {
+                expect(wrapper).toIncludeText("Existing password is valid")
+              }
+            },
           },
         },
       },
@@ -78,6 +96,11 @@ export const passwordFormMachine = Machine(
         states: {
           start: {
             on: passwordTransitions,
+            meta: {
+              test: async wrapper => {
+                // TBD
+              }
+            },
           },
           check_passwords: {
             on: {
@@ -107,27 +130,57 @@ export const passwordFormMachine = Machine(
           },
           valid: {
             on: passwordTransitions,
+            meta: {
+              test: async wrapper => {
+                expect(wrapper).toIncludeText("Passwords are valid")
+              }
+            },
           },
           not_equal: {
             on: passwordTransitions,
+            meta: {
+              test: async wrapper => {
+                expect(wrapper).toIncludeText("New passwords don't match")
+              }
+            },
           },
           empty: {
             on: passwordTransitions,
+            meta: {
+              test: async wrapper => {
+                expect(wrapper).toIncludeText("New passwords can't be empty")
+              }
+            },
           },
         },
       },
     },
   },
-  {
-    actions: {},
-    guards: {},
-  }
 );
 
-// export const toggleModel = createModel(toggleMachine).withEvents({
-//     TOGGLE: {
-//         exec: async wrapper => {
-//             await wrapper.find("button").simulate("click");
-//         },
-//     },
-// });
+export const passwordFormModel = createModel(passwordFormMachine).withEvents({
+  EXISTING_PASSWORD: {
+    exec: async (wrapper, event) => {
+      await wrapper.find("input#existing").simulate("change", {
+        target: {value: event.value},
+      });
+    },
+    cases: [{value: ""}, {value: "abc"}],
+  },
+  FIRST_PASSWORD: {
+    exec: async (wrapper, event) => {
+      await wrapper.find("input#first").simulate("change", {
+        target: {value: event.value},
+      });
+    },
+    cases: [{value: ""}, {value: "123"}],
+  },
+  SECOND_PASSWORD: {
+    exec: async (wrapper, event) => {
+      await wrapper.find("input#second").simulate("change", {
+        target: {value: event.value},
+      });
+    },
+    cases: [{value: ""}, {value: "123"}],
+  },
+});

@@ -6,7 +6,6 @@ import Toggle from "../toggle";
 
 describe('toggle', () => {
   const testPlans = toggleModel.getShortestPathPlans();
-//   console.log(testPlans);
 
   testPlans.forEach(plan => {
     describe(plan.description, () => {
