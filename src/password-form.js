@@ -38,15 +38,15 @@ class PasswordFormXState extends React.Component<Props, State> {
   );
 
   handleExistingChange = (e) => {
-    this.service.send("CHECK_EXISTING", {value: e.target.value});
+    this.service.send("EXISTING_PASSWORD", {value: e.target.value});
   };
 
   handleFirstPasswordChange = (e) => {
-    this.service.send("CHECK_NEW_PASSWORDS", {first: e.target.value});
+    this.service.send("FIRST_PASSWORD", {value: e.target.value});
   };
 
   handleSecondPasswordChange = (e) => {
-    this.service.send("CHECK_NEW_PASSWORDS", {second: e.target.value});
+    this.service.send("SECOND_PASSWORD", {value: e.target.value});
   };
 
   render() {
@@ -61,16 +61,28 @@ class PasswordFormXState extends React.Component<Props, State> {
     return (
       <div style={{display: "flex", flexDirection: "column"}}>
         Existing Password: <input onChange={this.handleExistingChange}></input>
-        {existingPassword === "invalid" && 
+        {existingPassword === "empty" && 
           <div style={{color: "red"}}>
-            Existing password can't be empty.
+            Existing password can't be empty
+          </div>}
+        {existingPassword === "valid" && 
+          <div style={{color: "green"}}>
+            Existing password is valid
           </div>}
         <br />
         New Password: <input onChange={this.handleFirstPasswordChange}></input>
         Repeat New Password: <input onChange={this.handleSecondPasswordChange}></input>
-        {newPasswords === "invalid" &&
+        {newPasswords === "not_equal" &&
           <div style={{color: "red"}}>
             New passwords don't match
+          </div>}
+        {newPasswords === "empty" &&
+          <div style={{color: "red"}}>
+            New passwords can't be empty
+          </div>}
+        {newPasswords === "valid" &&
+          <div style={{color: "green"}}>
+            Passwords are valid
           </div>}
       </div>
     );
