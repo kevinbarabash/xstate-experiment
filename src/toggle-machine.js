@@ -1,8 +1,19 @@
 import { Machine } from 'xstate';
 import { createModel } from '@xstate/test';
 
+interface ToggleStateSchema {
+  states: {
+    active: {},
+    inactive: {},
+  };
+}
+
+type ToggleEvent = { type: 'TOGGLE' };
+
+interface ToggleContext {}
+
 // This machine is completely decoupled from React
-export const toggleMachine = Machine({
+export const toggleMachine = Machine<ToggleContext, ToggleStateSchema, ToggleEvent>({
   id: 'toggle',
   initial: 'inactive',
   states: {
