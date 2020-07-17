@@ -30,10 +30,7 @@ class Toggle extends React.Component {
         <div>Red: {current.value.red}</div>
         <div>Yellow: {current.value.yellow}</div>
         <div>Green: {current.value.green}</div>
-        <button onClick={() => send('RESET')}>
-          RESET
-        </button>
-        <button onClick={() => send('SENSE_CAR')}>
+        <button id="sense-car" onClick={() => send('SENSE_CAR')}>
           SENSE_CAR
         </button>
       </div>
