@@ -22,7 +22,6 @@ describe('counter', () => {
   });
 
   it('should have full coverage', () => {
-    console.log(counterModel.getCoverage());
     return counterModel.testCoverage();
   });
 });
