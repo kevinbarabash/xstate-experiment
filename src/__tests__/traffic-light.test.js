@@ -50,14 +50,14 @@ describe('TrafficLight', () => {
       const wrapper = mount(<TrafficLight/>);
 
       const state = wrapper.state();
-      expect(state.current.value).toEqual({green: "no_cars"});
+      expect(state.current.value).toEqual({green: "waiting_for_cars"});
     });
 
     it("should transition to yellow after 2s of green", () => {
       const wrapper = mount(<TrafficLight/>);
 
       jest.advanceTimersByTime(1999);
-      expect(wrapper.state().current.value).toEqual({green: "no_cars"});
+      expect(wrapper.state().current.value).toEqual({green: "waiting_for_cars"});
 
       jest.advanceTimersByTime(1);
       expect(wrapper.state().current.value).toEqual({yellow: "active"});
@@ -67,7 +67,7 @@ describe('TrafficLight', () => {
       const wrapper = mount(<TrafficLight/>);
 
       jest.advanceTimersByTime(1999);
-      expect(wrapper.state().current.value).toEqual({green: "no_cars"});
+      expect(wrapper.state().current.value).toEqual({green: "waiting_for_cars"});
 
       jest.advanceTimersByTime(1);
       expect(wrapper.state().current.value).toEqual({yellow: "active"});
@@ -96,7 +96,7 @@ describe('TrafficLight', () => {
 
       jest.advanceTimersByTime(1);
 
-      expect(wrapper.state().current.value).toEqual({green: "no_cars"});
+      expect(wrapper.state().current.value).toEqual({green: "waiting_for_cars"});
     });
   });
 });
