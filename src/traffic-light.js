@@ -3,7 +3,7 @@ import { Machine, interpret } from 'xstate';
 
 import { trafficLightMachine } from './traffic-light-machine';
 
-class Toggle extends React.Component {
+class TrafficLight extends React.Component {
   state = {
     current: trafficLightMachine.initialState
   };
@@ -38,4 +38,4 @@ class Toggle extends React.Component {
   }
 }
 
-export default Toggle;
+export default TrafficLight;
