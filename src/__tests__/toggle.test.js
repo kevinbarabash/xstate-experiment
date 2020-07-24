@@ -14,6 +14,8 @@ describe('toggle', () => {
           const wrapper = mount(<Toggle />);
 
           await path.test(wrapper);
+
+          wrapper.unmount();
         });
       });
     });

@@ -15,6 +15,8 @@ describe('PasswordForm', () => {
           const wrapper = mount(<PasswordForm />);
 
           await path.test(wrapper);
+
+          wrapper.unmount();
         });
       });
     });

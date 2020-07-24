@@ -16,6 +16,8 @@ describe('counter', () => {
           const wrapper = mount(<Counter />);
 
           await path.test(wrapper);
+
+          wrapper.unmount();
         });
       });
     });

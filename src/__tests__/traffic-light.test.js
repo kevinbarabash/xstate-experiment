@@ -15,6 +15,8 @@ describe('TrafficLight', () => {
             const wrapper = mount(<TrafficLight />);
   
             await path.test(wrapper);
+
+            wrapper.unmount();
           });
         });
       });
